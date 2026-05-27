@@ -41,3 +41,14 @@ python -m http.server 8000
 1. `index.html` — 메인 · 7문항 퀴즈
 2. 퀴즈 완료 후 `result.html?code=...` — 추천 동아리 결과
 3. `about.html` — 멋쟁이사자처럼 소개 페이지
+
+### 4. (선택) 추첨 스크립트 실행
+
+`result.py`는 로컬 참가자 파일을 읽어 추첨합니다.
+
+```bash
+python result.py
+```
+
+- 실제 데이터는 `participants.local.txt`에 작성하세요. (git 추적 제외)
+- 저장소에는 예시 파일 `participants.example.txt`만 포함됩니다.

@@ -1,44 +1,34 @@
 import random
+from pathlib import Path
 
-# 전체 리스트 (이름 - 아이디 형태 또는 아이디만)
-people = [
-    "이혜주 : heajuuuuu",
-    "안규리 : yesmandarine",
-    "오시우 : swoouou",
-    "김다은 : zr__a948",
-    "이영준 : joon_0304",
-    "trail_jin0235",
-    "한규빈 : hgyuhuygh",
-    "미령 : mizuka_livingwater",
-    "김가희 : *rlarkgml17",
-    "강선미 : rkd.tjsal",
-    "aseunxa",
-    "이수연 : archit__sy",
-    "진우신 : wooshin.jin",
-    "im*.sunny_._",
-    "주연 : yeon.*.5845",
-    "한연수 : nyeontn",
-    "하승현 : hsh_cnuhi",
-    "박종현 : jonghhnn",
-    "sleunn__",
-    "윤경민 : kminyn",
-    "hyohyorin0",
-    "joo.seunghoon",
-    "김경민 : kimkm_03",
-    "김지유 : jiyujoy0228",
-    "송경민 : g.m.song*",
-    "김우형 : woobro02",
-    "윤민지 : m_nnzy",
-    "장현성: hsjjj_ang"
-]
+BASE_DIR = Path(__file__).resolve().parent
+LOCAL_FILE = BASE_DIR / "participants.local.txt"
+EXAMPLE_FILE = BASE_DIR / "participants.example.txt"
 
-# 뽑을 인원 수 설정
-n = 3  # 원하는 인원 수로 변경
 
-# 랜덤 추첨
-winners = random.sample(people, n)
+def load_people() -> list[str]:
+    source = LOCAL_FILE if LOCAL_FILE.exists() else EXAMPLE_FILE
+    if source == EXAMPLE_FILE:
+        print("participants.local.txt가 없어 예시 데이터로 실행합니다.")
 
-# 결과 출력
-print("🎉 커피 쿠폰 당첨자 🎉")
-for winner in winners:
-    print("-", winner)
+    lines = source.read_text(encoding="utf-8").splitlines()
+    people = [line.strip() for line in lines if line.strip() and not line.strip().startswith("#")]
+    if not people:
+        raise ValueError(f"참가자 데이터가 비어 있습니다: {source.name}")
+    return people
+
+
+def main() -> None:
+    people = load_people()
+    n = 3  # 원하는 인원 수로 변경
+    if len(people) < n:
+        raise ValueError(f"참가자 수({len(people)})가 추첨 인원 수({n})보다 적습니다.")
+
+    winners = random.sample(people, n)
+    print("🎉 커피 쿠폰 당첨자 🎉")
+    for winner in winners:
+        print("-", winner)
+
+
+if __name__ == "__main__":
+    main()

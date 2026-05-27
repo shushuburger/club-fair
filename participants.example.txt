@@ -1,0 +1,7 @@
+# 참가자 예시 데이터
+# 형식: 한 줄에 1명
+홍길동 : sample_id_01
+김철수 : sample_id_02
+이영희 : sample_id_03
+박민수 : sample_id_04
+최지은 : sample_id_05
